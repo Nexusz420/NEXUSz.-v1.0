@@ -25,8 +25,8 @@ app.get('/search', async (req, res) => {
             let durationSeconds = 0;
             if (timeParts.length === 2) durationSeconds = (timeParts[0] * 60) + timeParts[1];
             
-            // Proveedor alternativo de MP3 directo y de alta velocidad para streaming
-            const streamUrl = `https://api.vevioz.com/download/stream/${video.id}`;
+            // Apunta al endpoint de streaming de tu propia API
+            const streamUrl = `https://${req.get('host')}/stream?id=${video.id}`;
 
             return {
                 name: video.title,
@@ -41,6 +41,15 @@ app.get('/search', async (req, res) => {
     } catch (error) {
         res.status(500).json({ success: false, error: "Error interno" });
     }
+});
+
+// Endpoint que hace bypass y puentea el audio directo a Roblox
+app.get('/stream', (req, res) => {
+    const videoId = req.query.id;
+    if (!videoId) return res.status(400).send("Falta ID");
+    
+    // Redirección directa y limpia que los objetos Sound procesan al instante
+    res.redirect(302, `https://api.vevioz.com/download/stream/${videoId}`);
 });
 
 app.listen(PORT);
