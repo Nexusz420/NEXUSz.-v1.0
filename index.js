@@ -25,8 +25,8 @@ app.get('/search', async (req, res) => {
             let durationSeconds = 0;
             if (timeParts.length === 2) durationSeconds = (timeParts[0] * 60) + timeParts[1];
             
-            // Usamos una URL directa de audio (formato MP3 stream)
-            const streamUrl = `https://api.sing-box.ru/audio?url=${encodeURIComponent(video.url)}`;
+            // Proveedor alternativo de MP3 directo y de alta velocidad para streaming
+            const streamUrl = `https://api.vevioz.com/download/stream/${video.id}`;
 
             return {
                 name: video.title,
