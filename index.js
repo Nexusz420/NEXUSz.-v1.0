@@ -24,9 +24,9 @@ app.get('/search', async (req, res) => {
             const timeParts = video.duration.timestamp.split(':').map(Number);
             let durationSeconds = 0;
             if (timeParts.length === 2) durationSeconds = (timeParts[0] * 60) + timeParts[1];
-
-            // Usamos una API de conversión externa para transformar el video en audio MP3 directo para Roblox
-            const streamUrl = `https://convert.b64.to/api/download?url=${encodeURIComponent(video.url)}&format=mp3`;
+            
+            // Usamos una URL directa de audio (formato MP3 stream)
+            const streamUrl = `https://api.sing-box.ru/audio?url=${encodeURIComponent(video.url)}`;
 
             return {
                 name: video.title,
