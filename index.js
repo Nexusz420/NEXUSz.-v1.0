@@ -25,10 +25,13 @@ app.get('/search', async (req, res) => {
             let durationSeconds = 0;
             if (timeParts.length === 2) durationSeconds = (timeParts[0] * 60) + timeParts[1];
 
+            // Usamos una API de conversión externa para transformar el video en audio MP3 directo para Roblox
+            const streamUrl = `https://convert.b64.to/api/download?url=${encodeURIComponent(video.url)}&format=mp3`;
+
             return {
                 name: video.title,
                 artist: video.author.name || "Artista",
-                preview_url: video.url, 
+                preview_url: streamUrl, 
                 duration: durationSeconds,
                 cover_image: video.thumbnail || "rbxassetid://10842010178"
             };
@@ -41,4 +44,3 @@ app.get('/search', async (req, res) => {
 });
 
 app.listen(PORT);
-
